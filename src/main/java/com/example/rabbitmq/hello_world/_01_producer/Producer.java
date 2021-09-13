@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -27,7 +28,9 @@ public class Producer {
     public static final String USER_NAME = "admin";
     public static final String PASS_WORD = "admin";
 
-    // 发送消息
+    /**
+     * 发送消息
+     */
     public static void main(String[] args) {
         // 创建连接工厂
         ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -40,7 +43,8 @@ public class Producer {
         // 密码
         connectionFactory.setPassword(PASS_WORD);
 
-        try (Connection connection = connectionFactory.newConnection();// 创建Connection
+        // 创建Connection
+        try (Connection connection = connectionFactory.newConnection();
              // 获取Channel
              Channel channel = connection.createChannel()) {
 
@@ -64,7 +68,7 @@ public class Producer {
              * body - 消息正文
              */
             // 基本发布
-            channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+            channel.basicPublish("", QUEUE_NAME, null, message.getBytes(StandardCharsets.UTF_8));
 
             LOGGER.info(" [x] Sent '" + message + "'");
         } catch (IOException | TimeoutException e) {

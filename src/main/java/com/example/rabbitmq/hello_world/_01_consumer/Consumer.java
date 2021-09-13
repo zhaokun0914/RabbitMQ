@@ -27,7 +27,7 @@ public class Consumer {
     public static final String PASS_WORD = "admin";
 
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         // 创建连接工厂
         ConnectionFactory connectionFactory = new ConnectionFactory();
         // 工厂IP，连接RabbitMQ的队列
@@ -57,7 +57,7 @@ public class Consumer {
         /*
          * queue - queue的名称
          * autoAck - 如果服务器应该考虑消息一旦发送就确认为真； 如果服务器应该期待明确的确认，则为 false
-         * deliverCallback(consumerTag, message) - 传递消息时的回调
+         * deliverCallback(consumerTag, message) - 交付消息时的回调
          * cancelCallback(consumerTag) - 消费者被取消时的回调
          * 返回：服务器生成的consumerTag
          */
@@ -67,10 +67,9 @@ public class Consumer {
             LOGGER.info(" [√] Sent '" + new String(message.getBody()) + "'");
         }, (consumerTag) -> {
             // 消息被取消时执行
-            LOGGER.info("消息被取消时执行:" + consumerTag.getBytes(StandardCharsets.UTF_8));
+            LOGGER.info("消息被取消时执行:" + new String(consumerTag.getBytes(StandardCharsets.UTF_8)));
         });
 
-        LOGGER.info("先执行这个，再执行回调" + consumerTags);
     }
 
 }

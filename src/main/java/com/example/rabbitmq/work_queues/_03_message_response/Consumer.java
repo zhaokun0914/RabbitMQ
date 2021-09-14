@@ -79,6 +79,10 @@ public class Consumer {
             try {TimeUnit.SECONDS.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
             LOGGER.info("work queues 接受到的消息：" + msg);
 
+            /*
+             * deliveryTag - 交付标签
+             * multiple - true 确认所有消息，包括当前的交付标签； false 仅确认当前的交付标签。
+             */
             channel.basicAck(delivery.getEnvelope().getDeliveryTag(),false);
 
         }, (consumerTag) -> {

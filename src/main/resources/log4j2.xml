@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="OFF" monitorInterval="1800">
     <properties>
-        <property name="LOG_HOME">/logs</property>
+        <property name="LOG_HOME">logs</property>
         <property name="FILE_NAME">console</property>
     </properties>
 
@@ -23,16 +23,16 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{DEFAULT} [%thread] %5level %c{1}:%L - %m%n"/>
         </Console>
-        <!--<RollingFile name="daliyFile" fileName="${LOG_HOME}/${FILE_NAME}.log"
+        <RollingFile name="daliyFile" fileName="${LOG_HOME}/${FILE_NAME}.log"
                      filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz"
                      immediateFlush="true">
             <PatternLayout pattern="%d{DEFAULT} [%thread] %5level %c{1}:%L - %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
-                &lt;!&ndash;<SizeBasedTriggeringPolicy size="10 MB"/>&ndash;&gt;
+                <!--<SizeBasedTriggeringPolicy size="10 MB"/>-->
             </Policies>
             <DefaultRolloverStrategy max="20"/>
-        </RollingFile>-->
+        </RollingFile>
     </Appenders>
 
     <Loggers>
@@ -41,7 +41,7 @@
         </Logger>-->
         <Root level="info">
             <!-- 这里是输入到文件，很重要-->
-            <!--<AppenderRef ref="daliyFile"/>-->
+            <AppenderRef ref="daliyFile"/>
             <!-- 这里是输入到控制台-->
             <AppenderRef ref="Console"/>
         </Root>

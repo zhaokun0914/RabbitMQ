@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * work queues 模式
+ * 消息轮询，启动三个消费者，监听同一个队列，则MQ会将消息依次送给每个消费者
  * 这是一个工作线程，相当于之前的消费者
  *
  * @author Kavin
@@ -17,12 +19,15 @@ import java.nio.charset.StandardCharsets;
 public class Worker01 {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(Worker01.class);
+    public static final String ACK = "ack";
+    public static final String NACK = "nack";
+    public static final String REJECT = "reject";
 
     /**
      * 接收消息
      */
     public static void main(String[] args) throws IOException {
-        LOGGER.info("==> C3 工作线程等待接收消息");
+        LOGGER.info("==> C1 工作线程等待接收消息");
 
         // 1、获取信道
         Channel channel = RabbitUtils.createChannel();
@@ -40,17 +45,19 @@ public class Worker01 {
         // 3、基本消费
         /*
          * queue - queue的名称
-         * autoAck - 如果服务器应该考虑消息一旦发送就确认为真； 如果服务器应该期待明确的确认，则为 false
+         * autoAck - 自动应答ture，手动应答false
          * deliverCallback(consumerTag, message) - 交付消息时的回调
          * cancelCallback(consumerTag) - 消费者被取消时的回调
          * 返回：服务器生成的consumerTag
          */
-        channel.basicConsume(RabbitUtils.WORK_QUEUE_NAME, true, (consumerTag, message) -> {
+        channel.basicConsume(RabbitUtils.WORK_QUEUE_NAME, false, (consumerTag, delivery) -> {
             // 接收消息时的回调
-            LOGGER.info("worke queues 接受到的消息：" + new String(message.getBody()));
+            String msg = new String(delivery.getBody());
+            LOGGER.info("work queues 接受到的消息：" + msg);
+
         }, (consumerTag) -> {
             // 消息被取消时执行
-            LOGGER.info("worke queues 消息被取消时执行:" + new String(consumerTag.getBytes(StandardCharsets.UTF_8)));
+            LOGGER.info("work queues 消息被取消时执行:" + new String(consumerTag.getBytes(StandardCharsets.UTF_8)));
         });
     }
 

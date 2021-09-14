@@ -1,4 +1,4 @@
-package com.example.rabbitmq.work_queues._02_producer;
+package com.example.rabbitmq.work_queues._03_message_response;
 
 import com.example.rabbitmq.common.RabbitUtils;
 import com.rabbitmq.client.Channel;
@@ -8,16 +8,15 @@ import org.slf4j.LoggerFactory;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+
 /**
- * work queues 模式
- * 消息轮询，启动三个消费者，监听同一个队列，则MQ会将消息依次送给每个消费者
  *
  * @author Kavin
- * @date 2021-9-13 18:24:13
+ * @date 2021-9-13 21:07:19
  */
-public class Task01 {
+public class Producer {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(Task01.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Producer.class);
 
     public static void main(String[] args) throws Exception {
         // 1、获取信道

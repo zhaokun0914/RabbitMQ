@@ -56,15 +56,15 @@ public class Consumer {
 
         /*
          * queue - queue的名称
-         * autoAck - 如果服务器应该考虑消息一旦发送就确认为真； 如果服务器应该期待明确的确认，则为 false
+         * autoAck - 自动应答ture，手动应答false
          * deliverCallback(consumerTag, message) - 交付消息时的回调
          * cancelCallback(consumerTag) - 消费者被取消时的回调
          * 返回：服务器生成的consumerTag
          */
         // 基本消费
-        String consumerTags = channel.basicConsume(QUEUE_NAME, true, (consumerTag, message) -> {
+        String consumerTags = channel.basicConsume(QUEUE_NAME, true, (consumerTag, delivery) -> {
             // 接收消息时的回调
-            LOGGER.info(" [√] Sent '" + new String(message.getBody()) + "'");
+            LOGGER.info(" [√] Sent '" + new String(delivery.getBody()) + "'");
         }, (consumerTag) -> {
             // 消息被取消时执行
             LOGGER.info("消息被取消时执行:" + new String(consumerTag.getBytes(StandardCharsets.UTF_8)));

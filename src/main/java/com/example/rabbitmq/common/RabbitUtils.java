@@ -27,6 +27,11 @@ public class RabbitUtils {
     public static final String WORK_QUEUE_NAME = "work_queue_hello";
 
     /**
+     * work queues 队列名称
+     */
+    public static final String ACK_QUEUE = "ack_queue";
+
+    /**
      * IP地址
      */
     public static final String HOST = "127.0.0.1";

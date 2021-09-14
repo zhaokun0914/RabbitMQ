@@ -37,9 +37,9 @@ import java.util.concurrent.TimeUnit;
  * @author Kavin
  * @date 2021-9-13 21:07:06
  */
-public class Consumer {
+public class Consumer01 {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(Consumer.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Consumer01.class);
     public static final String ACK = "ack";
     public static final String NACK = "nack";
     public static final String REJECT = "reject";
@@ -48,7 +48,7 @@ public class Consumer {
      * 接收消息
      */
     public static void main(String[] args) throws Exception {
-        LOGGER.info("==> C2 工作线程等待接收消息");
+        LOGGER.info("==> C1 工作线程等待接收消息");
 
         // 1、获取信道
         Channel channel = RabbitUtils.createChannel();
@@ -61,7 +61,7 @@ public class Consumer {
          * autoDelete - 如果我们声明一个自动删除队列，则为 true（服务器将在不再使用时将其删除）
          * arguments - 队列的其他属性（构造参数）
          */
-        channel.queueDeclare(RabbitUtils.WORK_QUEUE_NAME, false, false, false, null);
+        channel.queueDeclare(RabbitUtils.ACK_QUEUE, false, false, false, null);
 
         // 3、基本消费
         /*
@@ -72,11 +72,11 @@ public class Consumer {
          * 返回：服务器生成的consumerTag
          */
         boolean autoAck = false;
-        channel.basicConsume(RabbitUtils.WORK_QUEUE_NAME, autoAck, (consumerTag, delivery) -> {
+        channel.basicConsume(RabbitUtils.ACK_QUEUE, autoAck, (consumerTag, delivery) -> {
             // 接收消息时的回调
-            String msg = new String(delivery.getBody());
+            String msg = new String(delivery.getBody(), StandardCharsets.UTF_8);
 
-            try {TimeUnit.SECONDS.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
+            try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
             LOGGER.info("work queues 接受到的消息：" + msg);
 
             /*

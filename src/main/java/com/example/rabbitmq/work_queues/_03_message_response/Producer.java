@@ -30,8 +30,7 @@ public class Producer {
          * autoDelete - 如果我们声明一个自动删除队列，则为 true（服务器将在不再使用时将其删除）
          * arguments - 队列的其他属性（构造参数）
          */
-        channel.queueDeclare(RabbitUtils.WORK_QUEUE_NAME, false, false, false, null);
-
+        channel.queueDeclare(RabbitUtils.ACK_QUEUE, false, false, false, null);
 
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
@@ -44,7 +43,7 @@ public class Producer {
              * props - 消息的其他属性 - 路由标头等
              * body - 消息正文
              */
-            channel.basicPublish("", RabbitUtils.WORK_QUEUE_NAME, null, message.getBytes(StandardCharsets.UTF_8));
+            channel.basicPublish("", RabbitUtils.ACK_QUEUE, null, message.getBytes(StandardCharsets.UTF_8));
             LOGGER.info("<== 消息发送完成：{}", message);
         }
     }

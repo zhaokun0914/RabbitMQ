@@ -34,7 +34,7 @@ public class Producer {
         Channel channel = RabbitUtils.createChannel();
 
 
-        // 2、声明持久化队列
+        // 2、声明[持久化队列]
         /*
          * queue - queue的名称
          * durable - 如果我们声明一个持久队列，则为 true（该队列将在服务器重启后继续存在）
@@ -42,6 +42,7 @@ public class Producer {
          * autoDelete - 如果我们声明一个自动删除队列，则为 true（服务器将在不再使用时将其删除）
          * arguments - 队列的其他属性（构造参数）
          */
+        // 队列持久化
         boolean durable = true;
         channel.queueDeclare(RabbitUtils.ACK_QUEUE, durable, false, false, null);
 
@@ -50,12 +51,14 @@ public class Producer {
         while (scanner.hasNext()) {
             String message = scanner.next();
 
-            // 3、发送消息，同时声明消息持久化
+            // 3、发送消息，同时声明[消息持久化]
             /*
              * exchange - 将消息发布到的交换机
              * routingKey - 路由key
              * props - 消息的其他属性 - 路由标头等
+             *   消息持久化：MessageProperties.PERSISTENT_TEXT_PLAIN
              * body - 消息正文
+             *
              */
             channel.basicPublish("", RabbitUtils.ACK_QUEUE, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes(StandardCharsets.UTF_8));
             LOGGER.info("<== 消息发送完成：{}", message);

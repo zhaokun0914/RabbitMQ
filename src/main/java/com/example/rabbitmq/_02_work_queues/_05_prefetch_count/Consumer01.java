@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * 限制生产者在收到确认之前发送给消费者的消息数量，从而实现在消费者端进行流量控制
  *
  * @author Kavin
- * @date 2021-09-17 09:52:32
+ * @date 2021-09-17 13:17:46
  */
 public class Consumer01 {
 

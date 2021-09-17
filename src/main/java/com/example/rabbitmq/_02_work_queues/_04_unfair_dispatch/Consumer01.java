@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  *     实现方式：channel.basicQos(1);
  *
  * @author Kavin
- * @date 2021-09-14 20:02:32
+ * @date 2021-09-15 20:02:32
  */
 public class Consumer01 {
 

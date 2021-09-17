@@ -1,6 +1,6 @@
-package com.example.rabbitmq._2_work_queues._06_prefetch_count;
+package com.example.rabbitmq._02_work_queues._05_prefetch_count;
 
-import com.example.rabbitmq._0_common.RabbitUtils;
+import com.example.rabbitmq._00_common.RabbitUtils;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +22,17 @@ import java.util.concurrent.TimeUnit;
  * 限制生产者在收到确认之前发送给消费者的消息数量，从而实现在消费者端进行流量控制
  *
  * @author Kavin
- * @date 2021-09-14 20:02:32
+ * @date 2021-09-17 09:52:32
  */
-public class Consumer01 {
+public class Consumer02 {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(Consumer01.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Consumer02.class);
 
     /**
      * 接收消息
      */
     public static void main(String[] args) throws Exception {
-        LOGGER.info("==> C1 工作线程等待接收消息，处理速度很快，1秒");
+        LOGGER.info("==> C2 工作线程等待接收消息，处理速度很慢，30秒");
 
         // 1、获取信道
         Channel channel = RabbitUtils.createChannel();
@@ -52,10 +52,10 @@ public class Consumer01 {
 
         // 3、设置qos，解决不公平分发
         /*
-         * channel.basicQos(1)指该消费者在接收到队列里的消息但没有返回确认结果之前，队列不会将新的消息分发给该消费者。
+         * channel.basicQos(2)指该消费者在接收到队列里的消息但没有返回确认结果之前，队列不会将新的消息分发给该消费者。
          * 队列中没有被消费的消息不会被删除，还存在于队列中。
          *
-         * channel.basicQos(1)和channel.basicAck(delivery.getEnvelope().getDeliveryTag(),false)
+         * channel.basicQos(2)和channel.basicAck(delivery.getEnvelope().getDeliveryTag(),false)
          * 是配套使用，只有在channel.basicQos被使用的时候channel.basicAck(delivery.getEnvelope().getDeliveryTag(),false)才起到作用。
          *
          * 请求特定的“quality of service(服务的质量)”设置。
@@ -65,7 +65,7 @@ public class Consumer01 {
          * prefetchCount - 服务器将传递的最大消息数，如果没有限制则为 0
          * global - 如果设置应该应用于整个channel而不是每个consumer，则为 true
          */
-        channel.basicQos(2);
+        channel.basicQos(1);
 
 
         // 4、基本消费
@@ -77,7 +77,7 @@ public class Consumer01 {
          * 返回：服务器生成的consumerTag
          */
         channel.basicConsume(RabbitUtils.ACK_QUEUE, false, (consumerTag, delivery) -> {
-            try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
+            try {TimeUnit.SECONDS.sleep(30);} catch (InterruptedException e) {e.printStackTrace();}
 
             // 接收消息时的回调
             String msg = new String(delivery.getBody(), StandardCharsets.UTF_8);

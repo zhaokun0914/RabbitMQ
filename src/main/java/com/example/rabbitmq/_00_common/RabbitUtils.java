@@ -1,4 +1,4 @@
-package com.example.rabbitmq._0_common;
+package com.example.rabbitmq._00_common;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -30,6 +30,11 @@ public class RabbitUtils {
      * work queues 队列名称
      */
     public static final String ACK_QUEUE = "ack_queue";
+
+    /**
+     * publish subscribe 队列名称
+     */
+    public static final String PUBLISH_SUBSCRIBE = "publishSubscribe";
 
     /**
      * IP地址

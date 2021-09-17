@@ -1,6 +1,6 @@
-package com.example.rabbitmq._2_work_queues._05_unfair_dispatch;
+package com.example.rabbitmq._02_work_queues._04_unfair_dispatch;
 
-import com.example.rabbitmq._0_common.RabbitUtils;
+import com.example.rabbitmq._00_common.RabbitUtils;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,15 +19,15 @@ import java.util.concurrent.TimeUnit;
  * @author Kavin
  * @date 2021-09-14 20:02:32
  */
-public class Consumer01 {
+public class Consumer02 {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(Consumer01.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Consumer02.class);
 
     /**
      * 接收消息
      */
     public static void main(String[] args) throws Exception {
-        LOGGER.info("==> C1 工作线程等待接收消息，处理速度很快，1秒");
+        LOGGER.info("==> C2 工作线程等待接收消息，处理速度很慢，30秒");
 
         // 1、获取信道
         Channel channel = RabbitUtils.createChannel();
@@ -54,7 +54,7 @@ public class Consumer01 {
          * 返回：服务器生成的consumerTag
          */
         channel.basicConsume(RabbitUtils.ACK_QUEUE, false, (consumerTag, delivery) -> {
-            try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
+            try {TimeUnit.SECONDS.sleep(30);} catch (InterruptedException e) {e.printStackTrace();}
 
             // 接收消息时的回调
             String msg = new String(delivery.getBody(), StandardCharsets.UTF_8);

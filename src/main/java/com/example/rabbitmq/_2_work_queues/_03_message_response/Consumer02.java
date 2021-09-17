@@ -1,6 +1,6 @@
-package com.example.rabbitmq.work_queues._03_message_response;
+package com.example.rabbitmq._2_work_queues._03_message_response;
 
-import com.example.rabbitmq.common.RabbitUtils;
+import com.example.rabbitmq._0_common.RabbitUtils;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +37,9 @@ import java.util.concurrent.TimeUnit;
  * @author Kavin
  * @date 2021-9-13 21:07:06
  */
-public class Consumer01 {
+public class Consumer02 {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(Consumer01.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Consumer02.class);
     public static final String ACK = "ack";
     public static final String NACK = "nack";
     public static final String REJECT = "reject";
@@ -48,7 +48,7 @@ public class Consumer01 {
      * 接收消息
      */
     public static void main(String[] args) throws Exception {
-        LOGGER.info("==> C1 工作线程等待接收消息");
+        LOGGER.info("==> C2 工作线程等待接收消息");
 
         // 1、获取信道
         Channel channel = RabbitUtils.createChannel();
@@ -76,7 +76,7 @@ public class Consumer01 {
             // 接收消息时的回调
             String msg = new String(delivery.getBody(), StandardCharsets.UTF_8);
 
-            try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
+            try {TimeUnit.SECONDS.sleep(30);} catch (InterruptedException e) {e.printStackTrace();}
             LOGGER.info("work queues 接受到的消息：" + msg);
 
             /*

@@ -1,4 +1,4 @@
-package com.example.rabbitmq.hello_world._01_producer;
+package com.example.rabbitmq._1_hello_world._01_producer;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

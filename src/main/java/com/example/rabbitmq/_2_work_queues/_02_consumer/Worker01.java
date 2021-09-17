@@ -1,6 +1,6 @@
-package com.example.rabbitmq.work_queues._02_consumer;
+package com.example.rabbitmq._2_work_queues._02_consumer;
 
-import com.example.rabbitmq.common.RabbitUtils;
+import com.example.rabbitmq._0_common.RabbitUtils;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -34,7 +34,7 @@ public class RabbitUtils {
     /**
      * publish subscribe 队列名称
      */
-    public static final String PUBLISH_SUBSCRIBE = "publishSubscribe";
+    public static final String PUBLISH_SUBSCRIBE = "publish_subscribe";
 
     /**
      * IP地址

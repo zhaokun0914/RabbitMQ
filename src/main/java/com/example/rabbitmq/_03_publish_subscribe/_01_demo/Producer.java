@@ -15,8 +15,10 @@ import java.util.concurrent.ConcurrentSkipListMap;
  *     发布订阅实现真正持久化
  *         原理：生产者将channel设置成confirm模式，一旦channel进入confirm模式，所有在该channel上面发布的消息都将会被指派一个唯一的ID(从1开始)。
  *              一旦消息被投递到所有匹配的队列之后，broker就会发送一个确认给生产者(包含消息的唯一ID)，这就使得生产者知道消息已经正确到达目的队列了。
- *              如果[消息]和[队列]是[可持久化]的，那么[确认消息]会在[将消息写入磁盘之后发出]，broker回传给生产者的确认消息中delivery-tag域包含了确认消息的序列号，此外broker也可以设置basic.ack的multiple域，表示到这个序列号之前的所有消息都已经得到了处理。
- *              confirm模式最大的好处在于他是异步的，一旦发布一条消息，生产者应用程序就可以在等channel返回确认的同时继续发送下一条消息，当消息最终得到确认之后，生产者应用便可以通过回调方法来处理该确认消息，如果RabbitMQ因为自身内部错误导致消息丢失，就会发送一条nack消息，生产者应用程序同样可以在回调方法中处理该nack消息。
+ *              如果[消息]和[队列]是[可持久化]的，那么[确认消息]会在[将消息写入磁盘之后发出]。
+ *              broker回传给生产者的确认消息中delivery-tag域包含了确认消息的序列号，此外broker也可以设置basic.ack的multiple域，表示到这个序列号之前的所有消息都已经得到了处理。
+ *              confirm模式最大的好处在于他是异步的，一旦发布一条消息，生产者应用程序就可以在等channel返回确认的同时继续发送下一条消息。
+ *              当消息最终得到确认之后，生产者应用便可以通过回调方法来处理该确认消息，如果RabbitMQ因为自身内部错误导致消息丢失，就会发送一条nack消息，生产者应用程序同样可以在回调方法中处理该nack消息。
  *         实现方式：
  *             1：开启发布确认的方法
  *                 发布确认默认没有开启，如果需要开启需要调用方法channel.confirmSelect()
@@ -33,6 +35,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  *                 3、异步确认发布
  *                     异步确认虽然编程逻辑比上两个要复杂，但是性价比最高，无论是可靠性还是效率都没得说，他是利用回调函数来达到消息可靠性传递的，这个中间件也是通过函数回调来保证是否投递成功
  *             3：如何处理异步未确认消息
+ *                 最好的解决的解决方案就是把未确认的消息放到一个基于内存的能被发布线程访问的队列，比如说用ConcurrentSkipListMap这个队列在 confirm callbacks 与 发布线程 之间进行消息的传递。
  *             4：以上3种发布确认速度对比
  *
  * @author kevin
@@ -81,10 +84,11 @@ public class Producer {
          * 2.是否为批量确认，true 可以确认小于等于当前序列号的消息，false 确认当前序列号消息
          */
         ConfirmCallback ackCallback = (sequenceNumber, multiple) -> {
-            LOGGER.info("<== 收到确认消息序号{}", sequenceNumber);
+            LOGGER.info("<== 收到服务器确认消息序号{}", sequenceNumber);
             if (multiple) {
                 // headMap返回的是小于等于当前序列号的未确认消息map
                 ConcurrentNavigableMap<Long, String> confirmed = skipListMap.headMap(sequenceNumber, true);
+                LOGGER.info("==> 批量确认模式，其中未确认的消息条数为 {} 条", confirmed.size());
                 // 清除未确认的消息
                 confirmed.clear();
             } else {

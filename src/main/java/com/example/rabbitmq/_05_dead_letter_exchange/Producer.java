@@ -14,6 +14,10 @@ import java.util.Map;
 
 /**
  * 死信队列 demo 生产者
+ *     死信的来源
+ *         1、消息的TTL超时
+ *         2、队列达到最大长度
+ *         3、消息被 nack 或 reject，并且 requeue=false
  *
  * @author Kavin
  * @date 2021-09-18 13:16:02

@@ -1,4 +1,4 @@
-package com.example.rabbitmq._03_publish_subscribe._02_exchange;
+package com.example.rabbitmq._03_publish_subscribe._02_exchange.fanout;
 
 import com.example.rabbitmq._00_common.RabbitUtils;
 import com.rabbitmq.client.BuiltinExchangeType;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.nio.charset.StandardCharsets;
 
 /**
- *
+ * 所有消费者都能接收到Fanout交换机发出的消息，即使队列和交换机绑定的routing key不同，也能接收到消息
  *
  * @author Kavin
  * @date 2021-09-17 16:50:33
@@ -34,7 +34,7 @@ public class Consumer {
         String queueName = channel.queueDeclare().getQueue();
 
         // 4、将队列绑定到交换机
-        channel.queueBind(queueName, EXCHANGE_NAME, "");
+        channel.queueBind(queueName, EXCHANGE_NAME, "1");
 
         // 5、消费消息
         channel.basicConsume(queueName, true, (consumerTag, delivery) -> {

@@ -1,4 +1,4 @@
-package com.example.rabbitmq._03_publish_subscribe._02_exchange;
+package com.example.rabbitmq._03_publish_subscribe._02_exchange.fanout;
 
 import com.example.rabbitmq._00_common.RabbitUtils;
 import com.rabbitmq.client.BuiltinExchangeType;
@@ -22,7 +22,7 @@ import java.util.Scanner;
  *         String queueName = channel.queueDeclare().getQueue();
  *     绑定(bindings)：binding 其实是 exchange 和 queue 之间的桥梁，它告诉我们 exchange 和那个 queue 进行了绑定。
  *     Fanout：
- *         介绍：它是将接收到的[所有消息][广播]到它知道的[所有队列中]
+ *         介绍：它是将接收到的[所有消息][广播]到它知道的[所有队列中]，即使队列和交换机绑定的routing key不同，也能接收到消息
  *
  * @author Kavin
  * @date 2021-09-17 16:50:33

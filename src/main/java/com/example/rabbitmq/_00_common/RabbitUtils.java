@@ -36,6 +36,17 @@ public class RabbitUtils {
      */
     public static final String PUBLISH_SUBSCRIBE = "publish_subscribe";
 
+    public static final String NORMAL_EXCHANGE = "normal_exchange";
+    public static final String DEAD_EXCHANGE = "dead_exchange";
+
+    public static final String NORMAL_QUEUE = "normal_queue";
+    public static final String DEAD_QUEUE = "dead_queue";
+
+    public static final String NORMAL_ROUTING_KEY = "normal_key";
+    public static final String DEAD_ROUTING_KEY = "dead_key";
+
+
+
     /**
      * IP地址
      */

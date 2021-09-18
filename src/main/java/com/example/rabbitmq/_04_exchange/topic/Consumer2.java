@@ -1,4 +1,4 @@
-package com.example.rabbitmq._03_publish_subscribe._02_exchange.topic;
+package com.example.rabbitmq._04_exchange.topic;
 
 import com.example.rabbitmq._00_common.RabbitUtils;
 import com.rabbitmq.client.BuiltinExchangeType;
@@ -16,6 +16,9 @@ import java.nio.charset.StandardCharsets;
  *     细节：
  *         * (星号)可以代替一个单词
  *         # (井号)可以替代零个或多个单词
+ *     特殊情况：
+ *         当一个队列绑定键是#，那么这个队列将接收所有数据，就有点像 fanout 了
+ *         如果队列绑定键当中没有#和*出现，那么该队列绑定类型就是 direct 了
  *
  *     2021-09-18 10:59:55,375 [pool-2-thread-4]  INFO Consumer2:42 - ==> 发送的消息配到了 -> *.*.rabbit 或 lazy.# 队列，消息内容为:被队列Q1、Q2接收到
  *     2021-09-18 11:00:00,650 [pool-2-thread-5]  INFO Consumer2:42 - ==> 发送的消息配到了 -> *.*.rabbit 或 lazy.# 队列，消息内容为:被队列Q1、Q2接收到

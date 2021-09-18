@@ -1,4 +1,4 @@
-package com.example.rabbitmq._03_publish_subscribe._01_demo;
+package com.example.rabbitmq._03_publish_subscribe;
 
 import com.example.rabbitmq._00_common.RabbitUtils;
 import com.rabbitmq.client.Channel;

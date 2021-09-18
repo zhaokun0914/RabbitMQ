@@ -1,4 +1,4 @@
-package com.example.rabbitmq._03_publish_subscribe._02_exchange.topic;
+package com.example.rabbitmq._04_exchange.topic;
 
 import com.example.rabbitmq._00_common.RabbitUtils;
 import com.rabbitmq.client.BuiltinExchangeType;

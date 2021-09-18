@@ -1,4 +1,4 @@
-package com.example.rabbitmq._03_publish_subscribe._02_exchange.direct;
+package com.example.rabbitmq._04_exchange.direct;
 
 import com.example.rabbitmq._00_common.RabbitUtils;
 import com.rabbitmq.client.BuiltinExchangeType;
@@ -15,8 +15,8 @@ import java.util.Scanner;
  * @author Kavin
  * @date 2021-09-18 09:07:19
  */
-public class ProducerError {
-    public static final Logger LOGGER = LoggerFactory.getLogger(ProducerError.class);
+public class ProducerInfo {
+    public static final Logger LOGGER = LoggerFactory.getLogger(ProducerInfo.class);
 
     public static final String EXCHANGE_NAME = "direct_exchange";
 
@@ -29,10 +29,10 @@ public class ProducerError {
 
         // 3、发送消息
         Scanner scanner = new Scanner(System.in);
-        LOGGER.info("==> 请输入即将发送的消息，此消息发送时候的routing key为: error");
+        LOGGER.info("==> 请输入即将发送的消息，此消息发送时候的routing key为: info");
         while (scanner.hasNext()) {
             String message = scanner.next();
-            channel.basicPublish(EXCHANGE_NAME, "error", null, message.getBytes(StandardCharsets.UTF_8));
+            channel.basicPublish(EXCHANGE_NAME, "info", null, message.getBytes(StandardCharsets.UTF_8));
         }
     }
 

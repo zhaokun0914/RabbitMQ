@@ -1,5 +1,6 @@
 package com.example.rabbitmq._06_ttl_queue._01_base;
 
+import com.example.rabbitmq.config.DelayedQueueConfig;
 import com.example.rabbitmq.config.TtlQueueConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -26,10 +27,19 @@ public class DeadLetterQueueConsumer {
     @RabbitListener(queues = TtlQueueConfig.DEAD_LETTER_QUEUE)
     public void receivedD(Message message) {
         String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
         String format = dateFormat.format(new Date());
-        log.info("<== 当前时间：{}，收到死信队列信息{}", format, msg);
+        log.info("<== 当前时间：{}，死信队列收到信息：{}", format, msg);
+    }
 
+    @RabbitListener(queues = DelayedQueueConfig.DELAYED_QUEUE_NAME)
+    public void receiveDelayedQueue(Message message) {
+        String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
+        String format = dateFormat.format(new Date());
+        log.info("当前时间：{},收到延时队列的消息：{}", format, msg);
     }
 
 }

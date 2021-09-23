@@ -34,7 +34,7 @@ public class ConsumerForNormal {
         Map<String, Object> arguments = new HashMap<>(16);
         arguments.put("x-dead-letter-exchange", RabbitUtils.DEAD_EXCHANGE);
         arguments.put("x-dead-letter-routing-key", RabbitUtils.DEAD_ROUTING_KEY);
-        arguments.put("x-max-length", 10);
+        arguments.put("x-max-length", 10);// 队列达到最大长度
 
 
         // 4、声明正常队列，后面的参数是如果该队列中的消息成为死信消息，则将其转发到 死信交换机 和 routing key

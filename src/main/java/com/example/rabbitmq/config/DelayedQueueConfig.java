@@ -19,6 +19,8 @@ public class DelayedQueueConfig {
 
     /**
      * 自定义交换机 我们在这里定义的是一个延迟交换机
+     * 在我们自定义的交换机中，这是一种新的交换类型，该类型消息支持延迟投递机制。
+     * 消息传递后并不会立即投递到目标队列中，而是存储在mnesia(一个分布式数据系统)表中，当达到投递时间时，才投递到目标队列中。
      *
      * @return
      */
@@ -36,7 +38,7 @@ public class DelayedQueueConfig {
 
     @Bean
     public Binding bindingDelayedQueue(Queue delayedQueue, CustomExchange delayedExchange) {
-        return BindingBuilder.bind(delayedExchange).to(delayedExchange).with(DELAYED_ROUTING_KEY).noargs();
+        return BindingBuilder.bind(delayedQueue).to(delayedExchange).with(DELAYED_ROUTING_KEY).noargs();
     }
 
 }

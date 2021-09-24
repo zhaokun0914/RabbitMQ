@@ -1,4 +1,4 @@
-package com.example.rabbitmq.config;
+package com.example.rabbitmq.config._01_ttl_config;
 
 import com.rabbitmq.client.BuiltinExchangeType;
 import org.springframework.amqp.core.*;

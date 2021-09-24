@@ -1,7 +1,7 @@
 package com.example.rabbitmq._06_ttl_queue;
 
-import com.example.rabbitmq.config.DelayedQueueConfig;
-import com.example.rabbitmq.config.TtlQueueConfig;
+import com.example.rabbitmq.config._01_ttl_config.DelayedQueueConfig;
+import com.example.rabbitmq.config._01_ttl_config.TtlQueueConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

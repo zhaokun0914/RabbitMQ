@@ -1,4 +1,4 @@
-package com.example.rabbitmq._06_ttl_queue._01_base;
+package com.example.rabbitmq._06_ttl_queue;
 
 import com.example.rabbitmq.config.DelayedQueueConfig;
 import com.example.rabbitmq.config.TtlQueueConfig;

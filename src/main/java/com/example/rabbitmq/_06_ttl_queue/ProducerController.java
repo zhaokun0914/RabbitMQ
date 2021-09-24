@@ -1,4 +1,4 @@
-package com.example.rabbitmq._06_ttl_queue._01_base;
+package com.example.rabbitmq._06_ttl_queue;
 
 import com.example.rabbitmq.config.DelayedQueueConfig;
 import com.example.rabbitmq.config.MsgTtlQueueConfig;
@@ -59,8 +59,15 @@ public class ProducerController {
         log.info("==> 当前时间：{}，发送一条信息给两个TTL队列：{}", format, message);
     }
 
+    /**
+     * 使用 rabbitmq_delayed_message_exchange 插件来解决上面的问题
+     * 下载地址：https://www.rabbitmq.com/community-plugins.html
+     *
+     * @param message   要发送的消息
+     * @param delayTime 设置的TTL时间
+     */
     @GetMapping("sendDelayMsg/{message}/{delayTime}")
-    public void sendMsg(@PathVariable String message, @PathVariable Integer delayTime) {
+    public void sendMsgDelayMsg(@PathVariable String message, @PathVariable Integer delayTime) {
         rabbitTemplate.convertAndSend(DelayedQueueConfig.DELAYED_EXCHANGE_NAME,
                                       DelayedQueueConfig.DELAYED_ROUTING_KEY,
                                       message,

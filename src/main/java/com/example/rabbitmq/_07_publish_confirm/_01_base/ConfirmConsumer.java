@@ -1,4 +1,4 @@
-package com.example.rabbitmq._07_publish_confirm;
+package com.example.rabbitmq._07_publish_confirm._01_base;
 
 import com.example.rabbitmq.config._02_publish_confirm_config.ConfirmConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -6,6 +6,10 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Kavin
+ * @date 2021-09-24 15:41:11
+ */
 @Slf4j
 @Component
 public class ConfirmConsumer {

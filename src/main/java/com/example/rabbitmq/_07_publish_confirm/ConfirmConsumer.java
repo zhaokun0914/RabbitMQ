@@ -1,4 +1,4 @@
-package com.example.rabbitmq._07_publish_confirm._01_base;
+package com.example.rabbitmq._07_publish_confirm;
 
 import com.example.rabbitmq.config._02_publish_confirm_config.ConfirmConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ public class ConfirmConsumer {
     @RabbitListener(queues = ConfirmConfig.CONFIRM_QUEUE_NAME)
     public void receiveMsg(Message message) {
         String msg = new String(message.getBody());
-        log.info("<== 接收到routing key为：{} 的队列的消息:{}", ConfirmConfig.CONFIRM_QUEUE_KEY, msg);
+        log.info("<== 接收到routing key为：{} 的队列的消息:{}", ConfirmConfig.CONFIRM_QUEUE_KEY1, msg);
     }
 
 }

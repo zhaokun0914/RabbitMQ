@@ -13,7 +13,8 @@ public class ConfirmConfig {
 
     public static final String CONFIRM_EXCHANGE_NAME = "confirm.exchange";
     public static final String CONFIRM_QUEUE_NAME = "confirm.queue";
-    public static final String CONFIRM_QUEUE_KEY = "key1";
+    public static final String CONFIRM_QUEUE_KEY1 = "key1";
+    public static final String CONFIRM_QUEUE_KEY2 = "key2";
 
     @Bean
     public DirectExchange confirmExchange() {
@@ -27,7 +28,7 @@ public class ConfirmConfig {
 
     @Bean
     public Binding queueuBinding(Queue confirmQueue, DirectExchange confirmExchange) {
-        return BindingBuilder.bind(confirmQueue).to(confirmExchange).with(CONFIRM_QUEUE_KEY);
+        return BindingBuilder.bind(confirmQueue).to(confirmExchange).with(CONFIRM_QUEUE_KEY1);
     }
 
 }

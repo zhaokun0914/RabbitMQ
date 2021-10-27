@@ -39,7 +39,7 @@ public class DeadLetterQueueConsumer {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
         String format = dateFormat.format(new Date());
-        log.info("当前时间：{},收到延时队列的消息：{}", format, msg);
+        log.info("<== 当前时间：{},收到延时队列的消息：{}", format, msg);
     }
 
 }

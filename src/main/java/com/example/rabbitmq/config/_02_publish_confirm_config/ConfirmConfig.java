@@ -25,7 +25,11 @@ public class ConfirmConfig {
      */
     @Bean
     public DirectExchange confirmExchange() {
-        return new DirectExchange(CONFIRM_EXCHANGE_NAME);
+        DirectExchange exchange = ExchangeBuilder.directExchange(CONFIRM_EXCHANGE_NAME)
+                                                 .durable(true)
+                                                 .alternate(BACKUP_EXCHANGE_NAME)// 指定备份交换机名称
+                                                 .build();
+        return exchange;
     }
 
     /**
